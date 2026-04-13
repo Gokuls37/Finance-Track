@@ -1,0 +1,10 @@
+[client]
+showSidebarNavigation = false
+
+[runner]
+fastReruns = true
+
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = false
