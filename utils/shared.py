@@ -506,6 +506,13 @@ def _find_credentials():
 def get_sheet():
     sc = ["https://www.googleapis.com/auth/spreadsheets",
           "https://www.googleapis.com/auth/drive"]
+    try:
+        sec = st.secrets.get("gcp_service_account", None)
+        if sec:
+            cr = Credentials.from_service_account_info(dict(sec), scopes=sc)
+            return gspread.authorize(cr).open("Family Portfolio System")
+    except Exception:
+        pass
     cred_path = _find_credentials()
     if not cred_path:
         raise FileNotFoundError("credentials.json not found")
