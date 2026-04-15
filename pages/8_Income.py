@@ -265,9 +265,13 @@ with tab3:
                     selected.append(i+2)
             if selected:
                 if st.button(f"Delete {len(selected)} record(s)", type="primary"):
-                    ws = data["_sheet"].worksheet("Income")
-                    for rn in sorted(selected, reverse=True):
-                        ws.delete_rows(rn)
-                    st.cache_data.clear()
-                    st.success("Deleted.")
-                    st.rerun()
+                    try:
+                        from utils.shared import get_sheet
+                        ws = get_sheet().worksheet("Income_Ledger")
+                        for rn in sorted(selected, reverse=True):
+                            ws.delete_rows(rn)
+                        st.cache_data.clear()
+                        st.success("Deleted.")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Delete failed: {e}")
